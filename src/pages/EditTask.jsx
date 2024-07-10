@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateTask} from "../features/task/taskSlice";
-import SpotifyPlayer from 'react-spotify-player';
 
 export default function EditTask() {
   const {id } = useParams();
@@ -48,6 +47,10 @@ export default function EditTask() {
     setTweetLinks([...tweetLinks, '']);
   };
 
+  const extractSpotifyTrackId = (url) => {
+    const match = url.match(/track\/([a-zA-Z0-9]+)/);
+    return match ? match[1] : '';
+  };
 
   const handleArtContentChange = (e) => {
     if (artType === 'image') {
@@ -136,6 +139,18 @@ export default function EditTask() {
             placeholder="Edit Spotify link"
             required
           />
+          {spotifyLink && (
+            <div className="mt-3">
+              <iframe
+                src={`https://open.spotify.com/embed/track/${extractSpotifyTrackId(spotifyLink)}`}
+                width="100%"
+                height="300"
+                frameBorder="0"
+                allowTransparency="true"
+                allow="encrypted-media"
+              ></iframe>
+            </div>
+          )}
         </Form.Group>
         <Form.Check
           type="checkbox"
