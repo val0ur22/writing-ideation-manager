@@ -1,0 +1,27 @@
+body.light {
+  background-color: white;
+  color: black;
+}
+
+body.dark {
+  background-color: black;
+  color: white;
+}
+
+.light .form-control::placeholder {
+  color: black; /* Placeholder color in light mode */
+}
+
+.light .form-control {
+  color: black; /* Text color in light mode */
+  background-color: white; /* Background color in light mode */
+}
+
+.dark .form-control::placeholder {
+  color: black; /* Placeholder color in dark mode */
+}
+
+.dark .form-control {
+  color: white; /* Text color in dark mode */
+  background-color: black; /* Background color in dark mode */
+}

@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <Container>
-      <h1 className="my-3">Topics</h1>
+      <h2 className="my-3">Topics</h2>
       <Row>
         <CardGroup tasks={taskList} />
       </Row>
@@ -18,7 +18,7 @@ export default function Home() {
 function CardGroup({ tasks }) {
   return tasks.map((task) => {
     return (
-      <Col md={4} key={task.id}>
+      <Col md={3} key={task.id}>
         <TaskCard task={task} />
       </Col>
     );

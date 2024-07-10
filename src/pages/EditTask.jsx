@@ -144,7 +144,7 @@ export default function EditTask() {
               <iframe
                 src={`https://open.spotify.com/embed/track/${extractSpotifyTrackId(spotifyLink)}`}
                 width="100%"
-                height="300"
+                height="200"
                 frameBorder="0"
                 allowTransparency="true"
                 allow="encrypted-media"

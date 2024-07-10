@@ -3,8 +3,11 @@ import { useDispatch } from "react-redux";
 import { addToList } from "../features/task/taskSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from '../contexts/ThemeContext';
+
 
 export default function AddTask() {
+  const { theme } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
@@ -15,15 +18,14 @@ export default function AddTask() {
   const [spotifyLink, setSpotifyLink] = useState("");
   const [completed, setCompleted] = useState(false);
 
-  function addTask(event) {
+  const addTask = (event) => {
     event.preventDefault();
-    const artContentToStore = artType === 'image' ? artContent : artContent;
     const newTask = {
       id: Date.now(),
       title,
       description,
       artType,
-      artContent: artContentToStore,
+      artContent,
       tweetLinks,
       spotifyLink: extractSpotifyTrackId(spotifyLink),
       completed,
@@ -31,7 +33,7 @@ export default function AddTask() {
     localStorage.setItem(`task-${newTask.id}`, JSON.stringify(newTask));
     dispatch(addToList(newTask));
     navigate("/");
-  }
+  };
 
   const handleTweetChange = (index, value) => {
     const newTweetLinks = [...tweetLinks];
@@ -62,8 +64,10 @@ export default function AddTask() {
   };
 
   return (
-    <Container>
-      <h1 className="my-3">Add Task</h1>
+    <Container className={theme}>
+      <h2 className={`my-3 ${theme === 'dark' ? 'text-light' : 'text-dark'}`}>
+        Add Task
+      </h2>
       <Form onSubmit={addTask}>
         <Form.Group className="mb-3" controlId="title">
           <Form.Label>Title</Form.Label>
@@ -71,20 +75,22 @@ export default function AddTask() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             type="text"
-            placeholder="Get software developer job"
+            placeholder="Insert potential essay title"
             required
+            className={theme}
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Description</Form.Label>
+          <Form.Label>Description/Prompts</Form.Label>
           <Form.Control
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             as="textarea"
             rows={3}
-            placeholder="Create an amazing project"
+            placeholder="Braindumps 🧠 here"
             required
+            className={theme}
           />
         </Form.Group>
 
@@ -94,6 +100,7 @@ export default function AddTask() {
             as="select"
             value={artType}
             onChange={(e) => setArtType(e.target.value)}
+            className={theme}
           >
             <option value="image">Upload Image</option>
             <option value="link">Paste Link</option>
@@ -108,6 +115,7 @@ export default function AddTask() {
               accept="image/*"
               onChange={handleArtContentChange}
               required
+              className={theme}
             />
           </Form.Group>
         ) : (
@@ -119,6 +127,7 @@ export default function AddTask() {
               onChange={(e) => setArtContent(e.target.value)}
               placeholder="Paste image link here"
               required
+              className={theme}
             />
           </Form.Group>
         )}
@@ -131,12 +140,13 @@ export default function AddTask() {
               type="text"
               value={tweet}
               onChange={(e) => handleTweetChange(index, e.target.value)}
-              placeholder="Enter Twitter/X link"
-              className="mb-2"
-              required
+              placeholder="Paste tweet link here"
+              className={theme}
             />
           ))}
-          <Button type="button" variant="secondary" className="mt-2" onClick={addTweetField}>Add another Tweet</Button>
+          <Button onClick={addTweetField} className="mt-2">
+            Add Tweet
+          </Button>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="spotifyLink">
@@ -145,7 +155,7 @@ export default function AddTask() {
             type="text"
             value={spotifyLink}
             onChange={(e) => setSpotifyLink(e.target.value)}
-            placeholder="Enter Spotify link"
+            placeholder="Paste Spotify link here"
             required
             className="form-control"
           />
@@ -154,7 +164,7 @@ export default function AddTask() {
               <iframe
                 src={`https://open.spotify.com/embed/track/${extractSpotifyTrackId(spotifyLink)}`}
                 width="100%"
-                height="300"
+                height="200"
                 frameBorder="0"
                 allowTransparency="true"
                 allow="encrypted-media"
@@ -162,15 +172,18 @@ export default function AddTask() {
             </div>
           )}
         </Form.Group>
-        <Form.Check
-          type="checkbox"
-          id="completed"
-          label="Mark as completed"
-          checked={completed}
-          onChange={(e) => setCompleted(e.target.checked)}
-          className="mb-3"
-        />
-        <Button variant="primary" type="submit">
+
+        <Form.Group className="mb-3" controlId="completed">
+          <Form.Check
+            type="checkbox"
+            label="Mark as Completed"
+            checked={completed}
+            onChange={(e) => setCompleted(e.target.checked)}
+            className={theme}
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" className={theme}>
           Submit
         </Button>
       </Form>

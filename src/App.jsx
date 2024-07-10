@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Outlet, Route, Routes, useNavigate } from "react-router-dom";
@@ -10,12 +11,14 @@ import Login from "./pages/Login";
 import { logout } from "./features/user/userSlice";
 import AuthGuard from "./components/AuthGuard";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 
 
 export function Layout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const { theme, toggleTheme } = useTheme();
 
     const handleLogout = () => {
       dispatch(logout());
@@ -23,15 +26,18 @@ export function Layout() {
     };
 
   return (
-    <>
-    <Navbar bg="light" variant="light">
+    <div className={theme}>
+    <Navbar bg={theme === 'light' ? 'light' : 'dark'} variant={theme}>
              <Container>
                <Navbar.Brand href="/">Writing Ideation Manager</Navbar.Brand>
                {isAuthenticated ? (
-                <>
-                  <Button className="ml" href="/add">Add Topic</Button>
-                  <Button onClick={handleLogout}>Logout</Button>
-                </>
+                <div className="d-flex">
+                  <Button className="mx-2" href="/add"><i className="bi bi-plus"/> </Button>
+                  <Button className="mx-2" onClick={handleLogout}>Logout</Button>
+                  <Button className="mx-2" onClick={toggleTheme}>
+                    <i className={`bi bi-${theme === 'light' ? 'moon' : 'sun'}-fill`} />
+                  </Button>
+                </div>
               ) : (
                 <Nav>
                   <Nav.Link href="/login">Login</Nav.Link>
@@ -40,7 +46,7 @@ export function Layout() {
             </Container>
           </Navbar>
           <Outlet />
-    </>
+    </div>
   );
 }
 
@@ -48,6 +54,7 @@ export function Layout() {
 export default function App() {
   return (
     <Provider store={store}>
+       <ThemeProvider>
       <ErrorBoundary>
       <BrowserRouter>
         <Routes>
@@ -60,6 +67,7 @@ export default function App() {
         </Routes>
       </BrowserRouter>
       </ErrorBoundary>
+       </ThemeProvider>
     </Provider>
   );
 }

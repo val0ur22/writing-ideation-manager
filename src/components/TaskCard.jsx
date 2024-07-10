@@ -3,14 +3,18 @@ import { Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { removeTask } from "../features/task/taskSlice";
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function TaskCard({ task }) {
+  const { theme } = useTheme();
   const completed = task.completed;
   const border = completed ? "success" : "danger";
   const [timer, setTimer] = useState(0);
   const [timerInterval, setTimerInterval] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // const cardClassName = theme === 'light' ? 'bg-light' : 'bg-dark text-white';
 
   const startTimer = () => {
     if (timerInterval === null) {
@@ -68,10 +72,10 @@ export default function TaskCard({ task }) {
           <Card.Title>{task.title}</Card.Title>
           <Card.Text>{task.description}</Card.Text>
           {imageSrc && (
-            <img src={imageSrc} alt="Art" style={{ maxWidth: '100%' }} />
+            <img src={imageSrc} alt="Art" style={{ maxWidth: '80%' }} />
           )}
           {task.tweetLinks && task.tweetLinks.map((tweet, index) => (
-            <div key={index}>
+            <div key={index} >
               <blockquote className="twitter-tweet">
                 <a href={tweet}></a>
               </blockquote>
@@ -82,7 +86,7 @@ export default function TaskCard({ task }) {
               <iframe
                 title="Spotify Embed"
                 src={spotifyEmbedUrl}
-                width="300"
+                width="280"
                 height="80"
                 frameBorder="0"
                 allowtran="encrypted-media"
@@ -98,9 +102,9 @@ export default function TaskCard({ task }) {
           <div className="d-flex justify-content-between">
             <span>Time spent: {timer} seconds</span>
             <div>
-              <Button variant="success" className="me-2" onClick={startTimer}>Start</Button>
-              <Button variant="warning" className="me-2" onClick={pauseTimer}>Pause</Button>
-              <Button variant="danger" onClick={resetTimer}>Reset</Button>
+              <Button variant="success" className="me-2" onClick={startTimer}> <i className="bi bi-play"></i></Button>
+              <Button variant="warning" className="me-2" onClick={pauseTimer}><i className="bi bi-pause-fill"></i></Button>
+              <Button variant="danger" onClick={resetTimer}><i className="bi bi-arrow-clockwise"></i></Button>
             </div>
           </div>
         </Card.Footer>
