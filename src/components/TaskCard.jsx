@@ -91,10 +91,6 @@ export default function TaskCard({ task }) {
               ></iframe>
             </div>
           )}
-          <div className="d-flex justify-content-between mt-3">
-            <Button variant="primary" onClick={() => navigate(`/edit-task/${task.id}`)}>Edit</Button>
-            <Button variant="danger" onClick={deleteTask}>Delete</Button>
-          </div>
         </Card.Body>
         <Card.Footer className="text-muted">
           <div>
@@ -103,6 +99,8 @@ export default function TaskCard({ task }) {
               <Button variant="success" className="mx-2" onClick={startTimer}> <i className="bi bi-play"></i></Button>
               <Button variant="danger" className="mx-2" onClick={pauseTimer}><i className="bi bi-pause-fill"></i></Button>
               <Button variant="warning" className="mx-2" onClick={resetTimer}><i className="bi bi-arrow-clockwise"></i></Button>
+              <Button variant="primary" className="mx-2" onClick={() => navigate(`/edit-task/${task.id}`)}><i className="bi bi-pencil"></i></Button>
+              <Button variant="danger" className="mx-2" onClick={deleteTask}><i className="bi bi-trash"></i></Button>
             </div>
           </div>
         </Card.Footer>
