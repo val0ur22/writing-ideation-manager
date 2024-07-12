@@ -14,7 +14,7 @@ export default function Login() {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    if (email === "farzana@sigmaschool.co" && password === "password") {
+    if (email === "valerie@example.com" && password === "password") {
       dispatch(login({ email, password}));
       navigate("/");
     } else {
