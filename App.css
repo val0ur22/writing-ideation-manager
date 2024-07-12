@@ -1,11 +1,11 @@
 body.light {
   background-color: white;
-  color: black;
+  color: black; /* Words color */
 }
 
 body.dark {
-  background-color: black;
-  color: white;
+  background-color: #1A1C20;
+  color: white; /* Words color */
 }
 
 .light .form-control::placeholder {

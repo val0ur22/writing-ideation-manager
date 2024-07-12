@@ -66,7 +66,7 @@ export default function AddTask() {
   return (
     <Container className={theme}>
       <h2 className={`my-3 ${theme === 'dark' ? 'text-light' : 'text-dark'}`}>
-        Add Task
+        Add Title
       </h2>
       <Form onSubmit={addTask}>
         <Form.Group className="mb-3" controlId="title">

@@ -14,8 +14,6 @@ export default function TaskCard({ task }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const cardClassName = theme === 'light' ? 'bg-light' : 'bg-dark text-white';
-
   const startTimer = () => {
     if (timerInterval === null) {
       const intervalID = setInterval(() => {
@@ -66,30 +64,30 @@ export default function TaskCard({ task }) {
 
   return (
     <>
-      <Card border={border} className="my-3">
+      <Card border={border} className={`my-3 ${theme}`}>
         <Card.Header>{!completed && "Not Completed"}</Card.Header>
         <Card.Body>
           <Card.Title>{task.title}</Card.Title>
           <Card.Text>{task.description}</Card.Text>
           {imageSrc && (
-            <img src={imageSrc} alt="Art" style={{ maxWidth: '80%' }} />
+            <img src={imageSrc} alt="Art" className="img-fluid mb-3" />
           )}
           {task.tweetLinks && task.tweetLinks.map((tweet, index) => (
-            <div key={index} >
+            <div key={index}>
               <blockquote className="twitter-tweet">
                 <a href={tweet}></a>
               </blockquote>
             </div>
           ))}
           {spotifyEmbedUrl && (
-            <div className="embed-responsive embed-responsive-16by9 mt-2">
+            <div>
               <iframe
                 title="Spotify Embed"
                 src={spotifyEmbedUrl}
-                width="280"
-                height="80"
+                width="240"
+                height="auto"
                 frameBorder="0"
-                allowtran="encrypted-media"
+                allowtransparency="encrypted-media"
               ></iframe>
             </div>
           )}
@@ -99,12 +97,12 @@ export default function TaskCard({ task }) {
           </div>
         </Card.Body>
         <Card.Footer className="text-muted">
-          <div className="d-flex justify-content-between">
+          <div>
             <span>Time spent: {timer} seconds</span>
-            <div>
-              <Button variant="success" className="me-2" onClick={startTimer}> <i className="bi bi-play"></i></Button>
-              <Button variant="warning" className="me-2" onClick={pauseTimer}><i className="bi bi-pause-fill"></i></Button>
-              <Button variant="danger" onClick={resetTimer}><i className="bi bi-arrow-clockwise"></i></Button>
+            <div className="d-flex justify-content-start mt-4" style={{ marginLeft: '-0.5rem' }}>
+              <Button variant="success" className="mx-2" onClick={startTimer}> <i className="bi bi-play"></i></Button>
+              <Button variant="danger" className="mx-2" onClick={pauseTimer}><i className="bi bi-pause-fill"></i></Button>
+              <Button variant="warning" className="mx-2" onClick={resetTimer}><i className="bi bi-arrow-clockwise"></i></Button>
             </div>
           </div>
         </Card.Footer>

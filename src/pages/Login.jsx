@@ -8,17 +8,17 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   const handleLogin = (event) => {
     event.preventDefault();
-    if (username === "farzana@sigmaschool.co" && password === "password") {
-      dispatch(login({ username, password}));
+    if (email === "farzana@sigmaschool.co" && password === "password") {
+      dispatch(login({ email, password}));
       navigate("/");
     } else {
-      setError("Please eneter a valid username and password.");
+      setError("Please eneter a valid email and password.");
     }
   };
 
@@ -26,13 +26,13 @@ export default function Login() {
     <Container>
       <h1 className="my-3">Login</h1>
       <Form onSubmit={handleLogin}>
-        <Form.Group className="mb-3" controlId="username">
-          <Form.Label>Username</Form.Label>
+        <Form.Group className="mb-3" controlId="email">
+          <Form.Label>Email</Form.Label>
           <Form.Control
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter your username"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email"
           required
           />
         </Form.Group>
