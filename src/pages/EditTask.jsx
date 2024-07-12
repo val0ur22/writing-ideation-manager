@@ -2,22 +2,22 @@ import { Button, Container, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateTask} from "../features/task/taskSlice";
+import { updateTask } from "../features/task/taskSlice";
 
 export default function EditTask() {
-  const {id } = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const task = useSelector((state) => state.task.taskList.find((task) => task.id === parseInt(id)));
 
   const [title, setTitle] = useState(task.title);
-  const [ description, setDescription ] = useState(task.description);
-  const [ artType, setArtType] = useState(task.artType || "" );
-  const [ artContent, setArtContent] = useState(task.artContent || "" );
+  const [description, setDescription] = useState(task.description);
+  const [artType, setArtType] = useState(task.artType || "");
+  const [artContent, setArtContent] = useState(task.artContent || "");
   const [tweetLinks, setTweetLinks] = useState([""]);
-  const [spotifyLink, setSpotifyLink] = useState("");
-  const [ completed, setCompleted ] = useState(task.completed || false);
+  const [spotifyLink, setSpotifyLink] = useState(task.spotifyLink || "");
+  const [completed, setCompleted] = useState(task.completed || false);
 
   function editTask(event) {
     event.preventDefault();
@@ -29,7 +29,7 @@ export default function EditTask() {
       artType,
       artContent,
       tweetLinks,
-      spotifyLink,
+      spotifyLink: extractSpotifyTrackId(spotifyLink),
       completed,
     };
     dispatch(updateTask(updatedTask));
@@ -38,9 +38,9 @@ export default function EditTask() {
 
 
   const handleTweetChange = (index, value) => {
-      const newTweetLinks = [...tweetLinks];
-      newTweetLinks[index] = value;
-      setTweetLinks(newTweetLinks);
+    const newTweetLinks = [...tweetLinks];
+    newTweetLinks[index] = value;
+    setTweetLinks(newTweetLinks);
   };
 
   const addTweetField = () => {
@@ -59,7 +59,7 @@ export default function EditTask() {
       setArtContent(e.target.value);
     }
   };
-  
+
   return (
     <Container>
       <h1 className="my-3">Edit Task</h1>
@@ -71,7 +71,7 @@ export default function EditTask() {
             onChange={(e) => setTitle(e.target.value)}
             type="text"
             required
-            />
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
           <Form.Label>Description</Form.Label>
@@ -113,23 +113,23 @@ export default function EditTask() {
             )}
           </Form.Group>
         )}
-        
+
         <Form.Group className="mb-3" controlId="tweetLinks">
           <Form.Label>Tweet Links</Form.Label>
           {tweetLinks.map((tweet, index) => (
-          <Form.Control
-            key={index}
-            type="text"
-            value={tweet}
-            onChange={(e) => handleTweetChange(index, e.target.value)}
-            placeholder="Edit Twitter/X link"
-            className="mb-2"
-            required
-          />
+            <Form.Control
+              key={index}
+              type="text"
+              value={tweet}
+              onChange={(e) => handleTweetChange(index, e.target.value)}
+              placeholder="Edit Twitter/X link"
+              className="mb-2"
+              required
+            />
           ))}
           <Button type="button" variant="secondary" className="mt-2" onClick={addTweetField}>Add another Tweet</Button>
         </Form.Group>
-        
+
         <Form.Group className="mb-3" controlId="spotifyLink">
           <Form.Label>Spotify Link</Form.Label>
           <Form.Control
@@ -139,14 +139,14 @@ export default function EditTask() {
             placeholder="Edit Spotify link"
             required
           />
-          {spotifyLink && (
+          {spotifyLink && extractSpotifyTrackId(spotifyLink) && (
             <div className="mt-3">
               <iframe
                 src={`https://open.spotify.com/embed/track/${extractSpotifyTrackId(spotifyLink)}`}
                 width="100%"
                 height="200"
                 frameBorder="0"
-                allowTransparency="true"
+                allowtransparency="true"
                 allow="encrypted-media"
               ></iframe>
             </div>
@@ -167,4 +167,3 @@ export default function EditTask() {
     </Container>
   );
 }
-
