@@ -40,6 +40,7 @@ export default function TaskCard({ task }) {
   };
 
   useEffect(() => {
+    console.log("Loading Twitter Widgets Script...");
     if (window.twttr) {
       window.twttr.widgets.load();
     } else {
@@ -65,8 +66,8 @@ export default function TaskCard({ task }) {
   return (
     <>
       <Card border={border} className={`my-3 ${theme}`}>
-        <Card.Header>{!completed && "Not Completed"}</Card.Header>
-        <Card.Body>
+        <Card.Header>{completed ? "Completed" : "Not Completed"}</Card.Header>
+        <Card.Body >
           <Card.Title>{task.title}</Card.Title>
           <Card.Text>{task.description}</Card.Text>
           {imageSrc && (
@@ -88,6 +89,7 @@ export default function TaskCard({ task }) {
                 height="auto"
                 frameBorder="0"
                 allowtransparency="encrypted-media"
+                style={{ marginBottom: '-50px' }}
               ></iframe>
             </div>
           )}

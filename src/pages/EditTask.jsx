@@ -74,7 +74,7 @@ export default function EditTask() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Description</Form.Label>
+          <Form.Label>Description/Prompts</Form.Label>
           <Form.Control
             value={description}
             onChange={(e) => setDescription(e.target.value)}

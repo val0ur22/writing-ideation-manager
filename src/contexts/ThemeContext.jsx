@@ -13,16 +13,14 @@ export const ThemeProvider = ({ children }) => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
   }, []);
-  
-  
+
+
   const toggleTheme = () => {
-    // setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
   };
 
- 
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

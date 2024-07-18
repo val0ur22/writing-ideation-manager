@@ -18,7 +18,7 @@ export default function Login() {
       dispatch(login({ email, password}));
       navigate("/");
     } else {
-      setError("Please eneter a valid email and password.");
+      setError("Please enter a valid email and password.");
     }
   };
 

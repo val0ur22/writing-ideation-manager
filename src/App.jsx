@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Container, Nav, Navbar, Button } from "react-bootstrap";
+import { Container, Navbar, Button } from "react-bootstrap";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import { store } from "./store";

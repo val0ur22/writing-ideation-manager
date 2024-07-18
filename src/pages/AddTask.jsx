@@ -6,11 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from '../contexts/ThemeContext';
 
 
+// This component lets us add a new task
 export default function AddTask() {
   const { theme } = useTheme();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [title, setTitle] = useState("");
+  const dispatch = useDispatch(); // Function to dispatch actions to Redux
+  const navigate = useNavigate(); // Function to navigate between pages
+  const [title, setTitle] = useState(""); // States ⬇️
   const [description, setDescription] = useState("");
   const [artType, setArtType] = useState('image');
   const [artContent, setArtContent] = useState('');
@@ -18,10 +19,13 @@ export default function AddTask() {
   const [spotifyLink, setSpotifyLink] = useState("");
   const [completed, setCompleted] = useState(false);
 
+
+  
+  // Function to handle the form submission to add a new task
   const addTask = (event) => {
     event.preventDefault();
     const newTask = {
-      id: Date.now(),
+      id: Date.now(), // Generates ID for each new task
       title,
       description,
       artType,
@@ -30,13 +34,13 @@ export default function AddTask() {
       spotifyLink: extractSpotifyTrackId(spotifyLink),
       completed,
     };
-    localStorage.setItem(`task-${newTask.id}`, JSON.stringify(newTask));
-    dispatch(addToList(newTask));
-    navigate("/");
+    localStorage.setItem(`task-${newTask.id}`, JSON.stringify(newTask)); // Stores task in local storage
+    dispatch(addToList(newTask)); 
+    navigate("/"); // / means Home page
   };
 
   const handleTweetChange = (index, value) => {
-    const newTweetLinks = [...tweetLinks];
+    const newTweetLinks = [...tweetLinks]; // Creates a copy of the tweetLinks array
     newTweetLinks[index] = value;
     setTweetLinks(newTweetLinks);
   };
@@ -166,7 +170,7 @@ export default function AddTask() {
                 width="100%"
                 height="200"
                 frameBorder="0"
-                allowTransparency="true"
+                allowtransparency="true"
                 allow="encrypted-media"
               ></iframe>
             </div>
